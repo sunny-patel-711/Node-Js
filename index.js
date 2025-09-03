@@ -22,9 +22,7 @@ app.get('/contact',(req,resp)=>{
 app.get('/faq',(req,resp)=>{
     resp.send('Faq Page')
 })
-app.get('/test',(req,resp)=>{
-    resp.send('Test Page')
-})
+
 
 app.listen(PORT,()=>{
     console.log(`App Running at ${PORT} port`)
