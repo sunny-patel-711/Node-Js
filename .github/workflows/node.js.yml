@@ -25,13 +25,30 @@ jobs:
 
       - run: npm ci
 
-      - name: Create .env file
-        run: |
-          touch .env
-          echo "${{ secrets.PROD_ENV_FILE }}" > .env
+      - name: Deploy to AWS
+        uses: appleboy/ssh-action@v0.1.7
+        with:
+          host: ${{ secrets.AWS_HOST }}          # Your AWS public IP or hostname
+          username: ${{ secrets.AWS_USER }}      # Usually 'ubuntu' or 'ec2-user'
+          key: ${{ secrets.AWS_SSH_KEY }}        # Private SSH key (add as secret)
+          script: |
+            # Navigate to project folder on AWS
+            cd /home/ubuntu/NodejsApp
 
-      - name: Install PM2 globally
-        run: npm install -g pm2
+            # Reset and pull latest code
+            git reset --hard
+            git pull origin main
 
-      - name: Restart BackendNode
-        run: pm2 restart BackendNode || pm2 start index.js --name BackendNode
+            # Create/update .env on AWS using secret
+            cat <<EOF > .env
+            ${{ secrets.PROD_ENV_FILE }}
+            EOF
+
+            # Install any new dependencies
+            npm install
+
+            # Restart PM2 process (start if not running)
+            pm2 restart BackendNode || pm2 start index.js --name BackendNode
+
+            # Save PM2 process list to survive server reboot
+            pm2 save
