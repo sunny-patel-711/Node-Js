@@ -29,4 +29,9 @@ jobs:
         run: |
           touch .env
           echo "${{secrets.PROD_ENV_FILE}}" > .env
-      - run: pm2 restart BackendNode
+
+      - name: Install PM2 globally
+        run: npm install -g pm2
+
+      - name: Restart BackendNode
+        run: pm2 restart BackendNode || pm2 start BackendNode
