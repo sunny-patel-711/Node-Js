@@ -23,7 +23,7 @@ app.get('/faq',(req,resp)=>{
     resp.send('Faq Page')
 })
 app.get('/test',(req,resp)=>{
-    resp.send('Test Page')
+    resp.send('Test Page Now')
 })
 
 app.listen(PORT,()=>{
