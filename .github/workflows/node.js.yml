@@ -33,7 +33,7 @@ jobs:
           key: ${{ secrets.AWS_SSH_KEY }}        # Private SSH key (add as secret)
           script: |
             # Navigate to project folder on AWS
-            cd /home/ubuntu/NodejsApp
+            cd /home/ubuntu/actions-runner-backendserver/_work/Node-Js/Node-Js
 
             # Reset and pull latest code
             git reset --hard
