@@ -2,13 +2,14 @@ const express = require('express');
 const dotenv = require("dotenv");
 dotenv.config();
 const PORT = process.env.PORT || 3000;
+const PROJECT_NAME = process.env.PROJECT_NAME || " ";
 
 
 const app = express(); 
 
 app.get('',(req,resp)=>{
     // resp.send('Home Page ' + req.query.name) // Query Parameter Pass.
-    resp.send('Home Page')
+    resp.send(`Home Page ${PROJECT_NAME}`);
 })
 
 app.get('/about',(req,resp)=>{
@@ -20,6 +21,9 @@ app.get('/contact',(req,resp)=>{
 })
 app.get('/faq',(req,resp)=>{
     resp.send('Faq Page')
+})
+app.get('/test',(req,resp)=>{
+    resp.send('Test Page')
 })
 
 app.listen(PORT,()=>{
