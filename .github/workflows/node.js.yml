@@ -34,4 +34,4 @@ jobs:
         run: npm install -g pm2
 
       - name: Restart BackendNode
-        run: pm2 restart BackendNode || pm2 start BackendNode
+        run: pm2 restart BackendNode || pm2 start index.js --name BackendNode
